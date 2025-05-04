@@ -141,11 +141,25 @@ const gameSetup = async()=> {
 
 }
 
+const showVersusText = () => {
+    const versusText = document.createElement('h2')
+    versusText.innerText = "VERSUS"
+    versusText.setAttribute('id','versus-text')
+    versusText.classList.add('col-4', 'text-center','align-content-center')
+    cardContainer.appendChild(versusText)
+}
+
 const guessHandling = async(guess)=>{
     console.log(`Submitted ${guess}`)
     try{
         const pokemon = await getPokemonById(guess)
         //Update card with guessed Pokémon or create new card if it doesn't exist
+
+        //Create versus text
+        if(cardContainer.querySelectorAll('#versus-text').length === 0){
+            showVersusText()
+        }
+        
         if(cardContainer.querySelectorAll('#pokemon-card').length >1){
             updatePokemonCard(pokemon,1)
         }
@@ -168,12 +182,12 @@ const guessHandling = async(guess)=>{
     return checkEffectiveness(typeData.damage_relations,typesToMatch)
 }
 
-const resultHandling = (result) =>{
+const resultHandling = (result) =>{ //TODO hide answer box and show result
     if(result){
-        console.log('WINNER')
+        console.log("CORRECT!") //TODO add reset button
     }
     else{
-        console.log('LOSER')
+        console.log("WRONG!")
     }
 }
 

@@ -21,3 +21,8 @@ h1{
 #pokemon-sprite{
     image-rendering: pixelated;
 }
+
+#versus-text{
+    color: rgb(196, 159, 59);
+    font-family: "press Start 2P",system-ui;
+}
