@@ -35,15 +35,13 @@ const getRandomPokemon = async () => {
    return pokemon;
 };
 
-const getTypeSpriteDataURLFromAPI = async(url) =>{
+const getTypeData = async(url) =>{
     try{
         console.log(`Attempting to get type data from url ${url}`);
         const typeObj = await axios.get(url);
         const typeData = typeObj.data;
         console.log(`Type Data Recieved for ${typeData.name}`);
-        console.log(typeData);
-        const sprite = typeData.sprites['generation-viii']['brilliant-diamond-and-shining-pearl'].name_icon;
-        return sprite
+        return typeData;
     }
     catch(error){
         console.log(`Failed to get Type Sprite from url: ${error}`);
@@ -67,9 +65,11 @@ const updatePokemonCard = async (pokemon) =>{
 
         //Display Pokemon Types
         for (let data of pokemon.types){
-            let typeCard = document.createElement('img');
-            let url = data.type.url;
-            typeCard.src = await getTypeSpriteDataURLFromAPI(url);
+            const typeCard = document.createElement('img');
+            const url = data.type.url;
+            const typeData = await getTypeData(url)
+            const sprite = typeData.sprites['generation-viii']['brilliant-diamond-and-shining-pearl'].name_icon;
+            typeCard.src = sprite;
             pokemonCard.appendChild(typeCard);
 
         };
@@ -109,7 +109,29 @@ const gameSetup = async()=> {
     }
 }
 
+const guessHandling = async(guess)=>{
+    console.log(`Submitted ${guess}`)
+    try{
+        const pokemon = await getPokemonById(guess)
+        console.log(pokemon)
+    }
+    catch(error){
+        console.log(`Pokémon not found`)
+    }
+}
 
+// Variable Declarations
+let typesToMatch;
 
+//Form Handling
 
+const form = document.querySelector('form')
+form.addEventListener('submit',(event)=>{
+    event.preventDefault()
+    const answerBox = document.querySelector('#answer')
+    guessHandling(answerBox.value.toLowerCase());
+    answerBox.value=""
+})
+
+//Main
 gameSetup()
