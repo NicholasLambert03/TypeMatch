@@ -82,6 +82,11 @@ const updatePokemonCard = async (pokemon) =>{
 
 };
 
+const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check and rework logic
+   return targetTypes.every(type =>
+    guessedTypeRelations.double_damage_to.some(t=> t.name === type)
+   )
+}
 
 const gameSetup = async()=> {
     const errorHandling = (error) =>{
@@ -93,9 +98,17 @@ const gameSetup = async()=> {
     let pokemon;
     try{
         pokemon = await getRandomPokemon();
-        if(pokemon===null){
-            pokemonCard.innerText = `Sorry Ash, the pokémon is in another castle:( \nplease refresh!` //Must improve handling of this
+        if(pokemon===null){// TODO Must improve handling of this
+            pokemonCard.innerText = `Sorry Ash, the pokémon is in another castle 
+            \n:( 
+            \nplease refresh!` 
         }
+        else{
+            typesToMatch = []
+            for (let data of pokemon.types){
+                typesToMatch.push(data.type.name)
+            }
+        };
     }
     catch (error){
         errorHandling()
@@ -113,24 +126,43 @@ const guessHandling = async(guess)=>{
     console.log(`Submitted ${guess}`)
     try{
         const pokemon = await getPokemonById(guess)
-        console.log(pokemon)
+        for(let data of pokemon.types){ //TODO REPEATED CODE TO BE FIXED
+            const url = data.type.url;
+            typeData = await getTypeData(url)
+        }   
     }
     catch(error){
         console.log(`Pokémon not found`)
+        return false
+    }
+    if(typesToMatch ===null){
+        console.log('Types to match not loaded yet')
+        return false
+    }
+    return checkEffectiveness(typeData.damage_relations,typesToMatch)
+}
+
+const resultHandling = (result) =>{
+    if(result){
+        console.log('WINNER')
+    }
+    else{
+        console.log('LOSER')
     }
 }
 
 // Variable Declarations
-let typesToMatch;
+let typesToMatch = null;
 
 //Form Handling
 
 const form = document.querySelector('form')
-form.addEventListener('submit',(event)=>{
+form.addEventListener('submit',async(event)=>{
     event.preventDefault()
     const answerBox = document.querySelector('#answer')
-    guessHandling(answerBox.value.toLowerCase());
+    const result = await guessHandling(answerBox.value.toLowerCase());
     answerBox.value=""
+    resultHandling(result)
 })
 
 //Main
