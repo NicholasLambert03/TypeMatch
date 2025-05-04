@@ -48,15 +48,15 @@ const getTypeData = async(url) =>{
     }
 
 };
-const createPokemonCard = ()=>{
+const createPokemonCard = (pokemon)=>{
     //setup card
     const card = document.createElement('div');
     card.setAttribute('id','pokemon-card')
-    card.classList.add('card')
+    card.classList.add('card','col-4')
 
-    const spriteHolder = document.createElement('img')
-    spriteHolder.setAttribute('id','pokemon-sprite')
-    spriteHolder.classList.add('img-thumbnail')
+    const cardSpriteHolder = document.createElement('img')
+    cardSpriteHolder.setAttribute('id','pokemon-sprite')
+    cardSpriteHolder.classList.add('img-thumbnail')
 
     const cardBody = document.createElement('div')
     cardBody.setAttribute('id','pokemon-card-body')
@@ -70,27 +70,29 @@ const createPokemonCard = ()=>{
     cardTypes.setAttribute('id','pokemon-types')
     cardTypes.classList.add('card-text')
 
-    card.appendChild(spriteHolder)
+    card.appendChild(cardSpriteHolder)
     card.appendChild(cardBody)
     cardBody.appendChild(cardTitle)
     cardBody.appendChild(cardTypes)
     cardContainer.appendChild(card)
+    updatePokemonCard(pokemon,cardContainer.querySelectorAll('#pokemon-card').length-1)
 
 }
 
 const updatePokemonCard = async (pokemon,cardNum) =>{
-    const card = cardContainer.getElementsByClassName('card')[cardNum] 
+    const cards = cardContainer.querySelectorAll('#pokemon-card')
+    const card = cards[cardNum] 
     try{
         
-        const displayPokemonSprite = card.querySelector('#pokemon-sprite')
-        const displayPokemonName = card.querySelector('#pokemon-name')
-        const displayPokemonTypes = card.querySelector('#pokemon-types')
+        const cardSpriteHolder = card.querySelector('#pokemon-sprite')
+        const cardTitle = card.querySelector('#pokemon-name')
+        const cardTypes = card.querySelector('#pokemon-types')
         // Display Pokémon sprite
-        displayPokemonSprite.src = pokemon.sprites.front_default;
+        cardSpriteHolder.src = pokemon.sprites.front_default;
         //Display Pokémon name
-        displayPokemonName.innerText = pokemon.name[0].toUpperCase()+pokemon.name.slice(1);
+        cardTitle.innerText = pokemon.name[0].toUpperCase()+pokemon.name.slice(1);
        ;
-
+        cardTypes.innerHTML = ""; // Clear previous types
         
         //Display Pokemon Types
         
@@ -98,9 +100,9 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
             const typeCard = document.createElement('img');
             const url = data.type.url;
             const typeData = await getTypeData(url)
-            const sprite = typeData.sprites['generation-viii']['brilliant-diamond-and-shining-pearl'].name_icon;
-            typeCard.src = sprite;
-            displayPokemonTypes.appendChild(typeCard);
+            const typeSprite = typeData.sprites['generation-viii']['brilliant-diamond-and-shining-pearl'].name_icon;
+            typeCard.src = typeSprite;
+            cardTypes.appendChild(typeCard);
 
         };
     }
@@ -119,46 +121,37 @@ const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check a
 }
 
 const gameSetup = async()=> {
-    createPokemonCard()
     const errorHandling = (error) =>{
-        console.log(`Error in game setup ${error}`)
-        const pokemonCard = document.querySelector('#pokemon-card');
-        pokemonCard.innerText = `Sorry Ash, the pokémon is in another castle:( \nplease refresh!`
+        
     };
     // Get Random Pokémon
     let pokemon;
     try{
         pokemon = await getRandomPokemon();
-        if(pokemon===null){// TODO Must improve handling of this
-            pokemonCard.innerText = `Sorry Ash, the pokémon is in another castle 
-            \n:( 
-            \nplease refresh!` 
-        }
-        else{
-            typesToMatch = []
-            for (let data of pokemon.types){
-                typesToMatch.push(data.type.name)
+        createPokemonCard(pokemon)
+        typesToMatch = []
+        for (let data of pokemon.types){
+            typesToMatch.push(data.type.name)
             }
-        };
     }
     catch (error){
-        errorHandling()
+        console.log(`Error in game setup ${error}`)
+        const pokemonCard = document.querySelector('#card-holder');pokemonCard.innerText = `Sorry Ash, the pokémon is in another castle :( \nplease refresh!`
     }
-    //Update pokemon card to show recieved pokémon
-    try{
-        await updatePokemonCard(pokemon,0)
-    }
-    catch(error){
-        errorHandling(error)
-    }
+
 }
 
 const guessHandling = async(guess)=>{
     console.log(`Submitted ${guess}`)
     try{
         const pokemon = await getPokemonById(guess)
-        createPokemonCard()
-        updatePokemonCard(pokemon,1)
+        //Update card with guessed Pokémon or create new card if it doesn't exist
+        if(cardContainer.querySelectorAll('#pokemon-card').length >1){
+            updatePokemonCard(pokemon,1)
+        }
+        else{
+            createPokemonCard(pokemon)
+        }
         for(let data of pokemon.types){ //TODO REPEATED CODE TO BE FIXED
             const url = data.type.url;
             typeData = await getTypeData(url)
@@ -184,10 +177,6 @@ const resultHandling = (result) =>{
     }
 }
 
-// Variable Declarations
-let typesToMatch = null;
-const cardContainer = document.querySelector('#card-holder')
-
 //Form Handling
 
 const form = document.querySelector('form')
@@ -199,5 +188,3 @@ form.addEventListener('submit',async(event)=>{
     resultHandling(result)
 })
 
-//Main
-gameSetup()
