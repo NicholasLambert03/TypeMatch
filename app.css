@@ -17,3 +17,7 @@ h1{
 #answer-label{
     color: rgb(196, 159, 59);
 }
+
+#pokemon-sprite{
+    image-rendering: pixelated;
+}

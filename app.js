@@ -48,12 +48,43 @@ const getTypeData = async(url) =>{
     }
 
 };
+const createPokemonCard = ()=>{
+    //setup card
+    const card = document.createElement('div');
+    card.setAttribute('id','pokemon-card')
+    card.classList.add('card')
 
-const updatePokemonCard = async (pokemon) =>{
+    const spriteHolder = document.createElement('img')
+    spriteHolder.setAttribute('id','pokemon-sprite')
+    spriteHolder.classList.add('img-thumbnail')
+
+    const cardBody = document.createElement('div')
+    cardBody.setAttribute('id','pokemon-card-body')
+    cardBody.classList.add('card-body','text-center')
+
+    const cardTitle = document.createElement('h2')
+    cardTitle.setAttribute('id','pokemon-name')
+    cardTitle.classList.add('card-title')
+
+    const cardTypes = document.createElement('p')
+    cardTypes.setAttribute('id','pokemon-types')
+    cardTypes.classList.add('card-text')
+
+    card.appendChild(spriteHolder)
+    card.appendChild(cardBody)
+    cardBody.appendChild(cardTitle)
+    cardBody.appendChild(cardTypes)
+    cardContainer.appendChild(card)
+
+}
+
+const updatePokemonCard = async (pokemon,cardNum) =>{
+    const card = cardContainer.getElementsByClassName('card')[cardNum] 
     try{
-        const displayPokemonSprite = document.querySelector('#pokemon-sprite')
-        const displayPokemonName = document.querySelector('#pokemon-name')
-        const displayPokemonTypes = document.querySelector('#pokemon-types')
+        
+        const displayPokemonSprite = card.querySelector('#pokemon-sprite')
+        const displayPokemonName = card.querySelector('#pokemon-name')
+        const displayPokemonTypes = card.querySelector('#pokemon-types')
         // Display Pokémon sprite
         displayPokemonSprite.src = pokemon.sprites.front_default;
         //Display Pokémon name
@@ -88,6 +119,7 @@ const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check a
 }
 
 const gameSetup = async()=> {
+    createPokemonCard()
     const errorHandling = (error) =>{
         console.log(`Error in game setup ${error}`)
         const pokemonCard = document.querySelector('#pokemon-card');
@@ -114,7 +146,7 @@ const gameSetup = async()=> {
     }
     //Update pokemon card to show recieved pokémon
     try{
-        await updatePokemonCard(pokemon)
+        await updatePokemonCard(pokemon,0)
     }
     catch(error){
         errorHandling(error)
@@ -125,6 +157,8 @@ const guessHandling = async(guess)=>{
     console.log(`Submitted ${guess}`)
     try{
         const pokemon = await getPokemonById(guess)
+        createPokemonCard()
+        updatePokemonCard(pokemon,1)
         for(let data of pokemon.types){ //TODO REPEATED CODE TO BE FIXED
             const url = data.type.url;
             typeData = await getTypeData(url)
@@ -152,6 +186,7 @@ const resultHandling = (result) =>{
 
 // Variable Declarations
 let typesToMatch = null;
+const cardContainer = document.querySelector('#card-holder')
 
 //Form Handling
 
