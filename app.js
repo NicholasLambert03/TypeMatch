@@ -51,26 +51,25 @@ const getTypeData = async(url) =>{
 
 const updatePokemonCard = async (pokemon) =>{
     try{
-        const pokemonCard = document.querySelector('#pokemon-card');
+        const displayPokemonSprite = document.querySelector('#pokemon-sprite')
+        const displayPokemonName = document.querySelector('#pokemon-name')
+        const displayPokemonTypes = document.querySelector('#pokemon-types')
         // Display Pokémon sprite
-        let img = document.createElement('img');
-        img.src = pokemon.sprites.front_default;
-        pokemonCard.appendChild(img);
-
+        displayPokemonSprite.src = pokemon.sprites.front_default;
         //Display Pokémon name
-        let name = document.createElement('h2');
+        displayPokemonName.innerText = pokemon.name[0].toUpperCase()+pokemon.name.slice(1);
+       ;
 
-        name.innerText = pokemon.name[0].toUpperCase()+pokemon.name.slice(1);
-        pokemonCard.appendChild(name);
-
+        
         //Display Pokemon Types
+        
         for (let data of pokemon.types){
             const typeCard = document.createElement('img');
             const url = data.type.url;
             const typeData = await getTypeData(url)
             const sprite = typeData.sprites['generation-viii']['brilliant-diamond-and-shining-pearl'].name_icon;
             typeCard.src = sprite;
-            pokemonCard.appendChild(typeCard);
+            displayPokemonTypes.appendChild(typeCard);
 
         };
     }
