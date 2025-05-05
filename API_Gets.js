@@ -11,6 +11,18 @@ const getPokemonTotal = async () => {
         }
     };
 
+const getPokemonDropdownData = async () => {
+    try{
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=1300');
+        const pokemonNames = response.data.results.map(pokemon => pokemon.name);
+        return pokemonNames;
+    }
+    catch(error){
+        console.error(`Error fetching dropdown data: ${error}`);
+        return null;
+    }
+}
+
 const getPokemonById = async (id) => {
     try{
         console.log(`Attempting to retrieve pokémon with id ${id}`)

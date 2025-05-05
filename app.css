@@ -18,11 +18,11 @@ h1{
     font-size: 3vw;
 }
 
-#answer-card{
+#search-card{
     font-family: "press Start 2P",system-ui;
 }
 
-#answer-label{
+#search-label{
     color: rgb(196, 159, 59);
 }
 

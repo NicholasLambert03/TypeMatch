@@ -21,10 +21,13 @@
             <h2 class="pt-3 text-center"id="result-text"></h2>
             <button class="btn btn-primary invisible" id="restart">Play Again?</button>
         </div>
-        <div class="pt-2 row text-center" id="answer-card">
+        <div class="pt-2 row text-center" id="search-card">
             <form>
-                <label id="answer-label" for="answer">Submit an Opponent: </label>
-                <input type="text" name="answer" id="answer">
+                <label id="search-label" for="search">Submit an Opponent: </label>
+                <input list="search-dropdown" type="text" name="search" id="search">
+                <datalist id="search-dropdown">
+                    <!-- Populated by JS -->
+                </datalist>
             </form>
         </div>
     </div>

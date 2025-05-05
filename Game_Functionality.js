@@ -16,7 +16,7 @@ const gameSetup = async()=> {
          console.log(`Error in game setup ${error}`)
          cardContainer.innerText = `Sorry Ash, the pokémon is in another castle :( \nplease refresh!`
      }
- 
+     populateDropdown()
  }
 
  const guessHandling = async(guess)=>{
@@ -71,9 +71,9 @@ const resultHandling = (result) =>{
 const form = document.querySelector('form')
 form.addEventListener('submit',async(event)=>{
     event.preventDefault()
-    const answerBox = document.querySelector('#answer')
-    const result = await guessHandling(answerBox.value.toLowerCase());
-    answerBox.value=""
+    const searchBox = document.querySelector('#search')
+    const result = await guessHandling(searchBox.value.toLowerCase());
+    searchBox.value=""
     resultHandling(result)
 })
 

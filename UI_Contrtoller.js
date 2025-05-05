@@ -62,6 +62,39 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
     }
 };
 
+const populateDropdown = async () => {
+    const dropdown = document.querySelector('#search-dropdown');
+    const names = await getPokemonDropdownData();
+    names.forEach(name=>{
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name[0].toUpperCase() + name.slice(1);
+        dropdown.appendChild(option);
+    })
+
+}
+
+const filterDropdown = () =>{
+    const dropdown = document.querySelector('#search-dropdown');
+    console.log('Filtering dropdown')
+    const filter = searchBox.value.toLowerCase()
+    console.log(`Filtering with ${filter}`)
+    const options = dropdown.querySelectorAll('option')
+    console.log(options)
+
+    for(let option of options){
+        console.log(`Checking ${option.value}`)
+        const text = option.value
+        if(text.includes(filter)){
+            option.style.display = 'block'
+        }
+        else{
+            console.log(`Hiding ${text}`)
+            option.style.display = 'none'
+        }
+    }
+}
+
 const showVersusText = () => {
     const versusText = document.createElement('h2')
     versusText.innerText = "VERSUS"
@@ -77,8 +110,8 @@ const showResultText = (result) => {
         resultCard.classList.remove('invisible')
     }
     if(result){
-        const answerCard = document.querySelector('#answer-card')
-        answerCard.classList.add('invisible')
+        const searchCard = document.querySelector('#search-card')
+        searchCard.classList.add('invisible')
         const restart = document.querySelector('#restart')
         restart.classList.remove('invisible')
         resultText.style.color="green"
@@ -96,12 +129,15 @@ const resetScreen = () => {
     if(!resultCard.classList.contains('invisible')){
         resultCard.classList.add('invisible')
     }
-    const answerCard = document.querySelector('#answer-card')
-    if(answerCard.classList.contains('invisible')){
-        answerCard.classList.remove('invisible')
+    const searchCard = document.querySelector('#search-card')
+    if(searchCard.classList.contains('invisible')){
+        searchCard.classList.remove('invisible')
     }
     const restart = document.querySelector('#restart')
     if(!restart.classList.contains('invisible')){
         restart.classList.add('invisible')
     }
 }
+
+const searchBox = document.querySelector('#search')
+searchBox.addEventListener('input', filterDropdown);
