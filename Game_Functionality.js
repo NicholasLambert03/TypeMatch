@@ -27,8 +27,12 @@ const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check a
 
  const guessHandling = async(guess)=>{
     console.log(`Submitted ${guess}`)
-    try{
+    try{``
         const pokemon = await getPokemonById(guess)
+        if(pokemon === null){
+            console.log(`Pokémon not found`)
+            return false
+        }
         //Update card with guessed Pokémon or create new card if it doesn't exist
 
         //Create versus text
@@ -42,13 +46,13 @@ const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check a
         else{
             createPokemonCard(pokemon)
         }
-        for(let data of pokemon.types){ //TODO REPEATED CODE TO BE FIXED
+        for(let data of pokemon.types){
             const url = data.type.url;
             typeData = await getTypeData(url)
         }   
     }
     catch(error){
-        console.log(`Pokémon not found`)
+        console.log(`Pokémon not found ${error}`)
         return false
     }
     if(typesToMatch ===null){
@@ -58,14 +62,8 @@ const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check a
     return checkEffectiveness(typeData.damage_relations,typesToMatch)
 }
 
-const resultHandling = (result) =>{ //TODO hide answer box and show result
+const resultHandling = (result) =>{
     showResultText(result)
-    if(result){
-        console.log("CORRECT!") //TODO add reset button
-    }
-    else{
-        console.log("WRONG!")
-    }
 }
 
 //Form Handling

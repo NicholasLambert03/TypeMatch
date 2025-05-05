@@ -21,16 +21,29 @@ const getPokemonById = async (id) => {
     }
     catch (error)  {
         console.error(`Error fetching data: ${error}`);
-        return null;
+        throw new Error(`Pokémon with id ${id} not found`);
     };
 }
 
 
 const getRandomPokemon = async () => {
    const total = await getPokemonTotal();
-   const randomPokemonId = Math.floor(Math.random() * total) + 1;
-   const pokemon = await getPokemonById(randomPokemonId);
-   return pokemon;
+   const retries = 3;
+   for(let attempts = 0; attempts<retries;attempts++){
+    try{
+        const randomPokemonId = Math.floor(Math.random() * total) + 1;
+        const pokemon = await getPokemonById(randomPokemonId);
+        return pokemon;
+    }
+    catch (error) {
+        console.error(`Error fetching data: ${error}`);
+        if(attempts === retries - 1){
+            throw new Error(`Failed to get random Pokémon after ${retries} attempts`);
+        }
+        console.log(`Retrying... (${attempts + 1}/${retries})`);
+    }
+   }
+   
 };
 
 const getTypeData = async(url) =>{
