@@ -14,7 +14,7 @@ const createPokemonCard = (pokemon)=>{
 
     const cardTitle = document.createElement('h2')
     cardTitle.setAttribute('id','pokemon-name')
-    cardTitle.classList.add('card-title')
+    cardTitle.classList.add('card-title','text-capitalize')
 
     const cardTypes = document.createElement('p')
     cardTypes.setAttribute('id','pokemon-types')
@@ -40,7 +40,7 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
         // Display Pokémon sprite
         cardSpriteHolder.src = pokemon.sprites.front_default;
         //Display Pokémon name
-        cardTitle.innerText = pokemon.name[0].toUpperCase()+pokemon.name.slice(1);
+        cardTitle.innerText = pokemon.name
        ;
         cardTypes.innerHTML = ""; // Clear previous types
         
@@ -48,6 +48,7 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
         
         for (let data of pokemon.types){
             const typeCard = document.createElement('img');
+            typeCard.classList.add('img-fluid','type-card')
             const url = data.type.url;
             const typeData = await getTypeData(url)
             const typeSprite = typeData.sprites['generation-viii']['brilliant-diamond-and-shining-pearl'].name_icon;
@@ -65,7 +66,7 @@ const showVersusText = () => {
     const versusText = document.createElement('h2')
     versusText.innerText = "VERSUS"
     versusText.setAttribute('id','versus-text')
-    versusText.classList.add('col-4', 'text-center','align-content-center')
+    versusText.classList.add('col-4', 'text-center','align-content-center','md-4')
     cardContainer.appendChild(versusText)
 }
 

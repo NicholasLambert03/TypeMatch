@@ -15,6 +15,7 @@ h1{
 #pokemon-name{
     color: rgb(43,50,63);
     font-weight: bold;
+    font-size: 3vw;
 }
 
 #answer-card{
@@ -32,6 +33,7 @@ h1{
 #versus-text{
     color: rgb(196, 159, 59);
     font-family: "press Start 2P",system-ui;
+    font-size: 5vw;
 }
 
 #result-text{
@@ -42,4 +44,9 @@ h1{
 #restart{
     background-color: rgb(100,100,124);
     border-color: rgb(196, 159, 59);
+}
+
+.img-thumbnail{
+    background-color: rgb(47,50,63);
+    border-width: 0px;
 }

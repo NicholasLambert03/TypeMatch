@@ -1,10 +1,4 @@
-const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check and rework logic
-    return targetTypes.every(type =>
-     guessedTypeRelations.double_damage_to.some(t=> t.name === type)
-    )
- }
- 
- const gameSetup = async()=> {
+const gameSetup = async()=> {
      const errorHandling = (error) =>{
          
      };
@@ -62,6 +56,12 @@ const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check a
     return checkEffectiveness(typeData.damage_relations,typesToMatch)
 }
 
+const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check and rework logic
+    return targetTypes.every(type =>
+     guessedTypeRelations.double_damage_to.some(t=> t.name === type)
+    )
+ }
+ 
 const resultHandling = (result) =>{
     showResultText(result)
 }
