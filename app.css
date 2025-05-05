@@ -1,11 +1,13 @@
 body{
     background-color: rgb(47,50,63);
 }
-
 .card{
     background-color:rgb(100,100,124);
+}
+#card-holder .card{
     border-top: 10px solid rgb(100,100,124);
 }
+
 
 h1{
     background-color:rgb(100,100,124);
@@ -15,10 +17,9 @@ h1{
 #pokemon-name{
     color: rgb(43,50,63);
     font-weight: bold;
-    font-size: 3vw;
+    
 }
-
-#search-card{
+#search-card,#htp-title,#thanks{
     font-family: "press Start 2P",system-ui;
 }
 
@@ -36,6 +37,7 @@ h1{
     font-size: 5vw;
 }
 
+
 #result-text{
     color: rgb(196, 159, 59);
     font-family: "press Start 2P",system-ui;
@@ -49,4 +51,19 @@ h1{
 .img-thumbnail{
     background-color: rgb(47,50,63);
     border-width: 0px;
+}
+
+#htp-title{
+    color: rgb(196, 159, 59);
+    font-family: "press Start 2P",system-ui;
+}
+
+#shoutout a,#thanks a{
+    color: rgb(39, 84, 138);
+    text-decoration: none;
+    font-family: "press Start 2P",system-ui;
+}
+#shoutout a:hover,#thanks a:hover{
+    color: rgb(196, 159, 59);
+    text-decoration: underline;
 }

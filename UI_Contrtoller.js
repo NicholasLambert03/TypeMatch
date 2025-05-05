@@ -2,7 +2,7 @@ const createPokemonCard = (pokemon)=>{
     //setup card
     const card = document.createElement('div');
     card.setAttribute('id','pokemon-card')
-    card.classList.add('card','col-4')
+    card.classList.add('card','col-4','col-lg-3')
 
     const cardSpriteHolder = document.createElement('img')
     cardSpriteHolder.setAttribute('id','pokemon-sprite')
@@ -76,14 +76,10 @@ const populateDropdown = async () => {
 
 const filterDropdown = () =>{
     const dropdown = document.querySelector('#search-dropdown');
-    console.log('Filtering dropdown')
     const filter = searchBox.value.toLowerCase()
-    console.log(`Filtering with ${filter}`)
     const options = dropdown.querySelectorAll('option')
-    console.log(options)
 
     for(let option of options){
-        console.log(`Checking ${option.value}`)
         const text = option.value
         if(text.includes(filter)){
             option.style.display = 'block'
@@ -99,7 +95,7 @@ const showVersusText = () => {
     const versusText = document.createElement('h2')
     versusText.innerText = "VERSUS"
     versusText.setAttribute('id','versus-text')
-    versusText.classList.add('col-4', 'text-center','align-content-center','md-4')
+    versusText.classList.add('col-4','text-center','align-content-center','md-4')
     cardContainer.appendChild(versusText)
 }
 
