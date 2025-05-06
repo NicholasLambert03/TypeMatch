@@ -24,13 +24,13 @@ const createPokemonCard = (pokemon)=>{
     card.appendChild(cardBody)
     cardBody.appendChild(cardTitle)
     cardBody.appendChild(cardTypes)
-    cardContainer.appendChild(card)
-    updatePokemonCard(pokemon,cardContainer.querySelectorAll('#pokemon-card').length-1)
+    pokemonCardContainer.appendChild(card)
+    updatePokemonCard(pokemon,pokemonCardContainer.querySelectorAll('#pokemon-card').length-1)
 
 }
 
 const updatePokemonCard = async (pokemon,cardNum) =>{
-    const cards = cardContainer.querySelectorAll('#pokemon-card')
+    const cards = pokemonCardContainer.querySelectorAll('#pokemon-card')
     const card = cards[cardNum] 
     try{
         
@@ -85,7 +85,6 @@ const filterDropdown = () =>{
             option.style.display = 'block'
         }
         else{
-            console.log(`Hiding ${text}`)
             option.style.display = 'none'
         }
     }
@@ -96,17 +95,17 @@ const showVersusText = () => {
     versusText.innerText = "VERSUS"
     versusText.setAttribute('id','versus-text')
     versusText.classList.add('col-4','text-center','align-content-center','md-4')
-    cardContainer.appendChild(versusText)
+    pokemonCardContainer.appendChild(versusText)
 }
 
 const showResultText = (result) => {
-    const resultCard = document.querySelector('#result-card')
+    const resultCard = document.querySelector('#result')
     const resultText = resultCard.querySelector('#result-text')
     if(resultCard.classList.contains('invisible')){
         resultCard.classList.remove('invisible')
     }
     if(result){
-        const searchCard = document.querySelector('#search-card')
+        const searchCard = document.querySelector('#search')
         searchCard.classList.add('invisible')
         const restart = document.querySelector('#restart')
         restart.classList.remove('invisible')
@@ -120,12 +119,12 @@ const showResultText = (result) => {
 }
 
 const resetScreen = () => {
-    cardContainer.innerHTML = ""
-    const resultCard = document.querySelector('#result-card')
+    pokemonCardContainer.innerHTML = ""
+    const resultCard = document.querySelector('#result')
     if(!resultCard.classList.contains('invisible')){
         resultCard.classList.add('invisible')
     }
-    const searchCard = document.querySelector('#search-card')
+    const searchCard = document.querySelector('#search')
     if(searchCard.classList.contains('invisible')){
         searchCard.classList.remove('invisible')
     }
@@ -135,5 +134,5 @@ const resetScreen = () => {
     }
 }
 
-const searchBox = document.querySelector('#search')
+const searchBox = document.querySelector('#search-box')
 searchBox.addEventListener('input', filterDropdown);

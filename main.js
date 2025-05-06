@@ -1,4 +1,4 @@
 // Variable Declarations
 let typesToMatch = null;
-const cardContainer = document.querySelector('#card-holder')
+const pokemonCardContainer = document.querySelector('#pokemon-card-holder')
 gameSetup()

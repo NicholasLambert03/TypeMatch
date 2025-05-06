@@ -4,7 +4,7 @@ body{
 .card{
     background-color:rgb(100,100,124);
 }
-#card-holder .card{
+#pokemon-card-holder .card{
     border-top: 10px solid rgb(100,100,124);
 }
 
@@ -19,7 +19,7 @@ h1{
     font-weight: bold;
     
 }
-#search-card,#htp-title,#thanks{
+#search,#htp-title,#thanks{
     font-family: "press Start 2P",system-ui;
 }
 

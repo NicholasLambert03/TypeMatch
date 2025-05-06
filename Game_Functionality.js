@@ -14,7 +14,7 @@ const gameSetup = async()=> {
      }
      catch (error){
          console.log(`Error in game setup ${error}`)
-         cardContainer.innerText = `Sorry Ash, the pokémon is in another castle :( \nplease refresh!`
+         pokemonCardContainer.innerText = `Sorry Ash, the pokémon is in another castle :( \nplease refresh!`
      }
      populateDropdown()
  }
@@ -30,11 +30,11 @@ const gameSetup = async()=> {
         //Update card with guessed Pokémon or create new card if it doesn't exist
 
         //Create versus text
-        if(cardContainer.querySelectorAll('#versus-text').length === 0){
+        if(pokemonCardContainer.querySelectorAll('#versus-text').length === 0){
             showVersusText()
         }
         
-        if(cardContainer.querySelectorAll('#pokemon-card').length >1){
+        if(pokemonCardContainer.querySelectorAll('#pokemon-card').length >1){
             updatePokemonCard(pokemon,1)
         }
         else{
@@ -71,7 +71,7 @@ const resultHandling = (result) =>{
 const form = document.querySelector('form')
 form.addEventListener('submit',async(event)=>{
     event.preventDefault()
-    const searchBox = document.querySelector('#search')
+    const searchBox = document.querySelector('#search-box')
     const result = await guessHandling(searchBox.value.toLowerCase());
     searchBox.value=""
     resultHandling(result)
