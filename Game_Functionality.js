@@ -56,10 +56,27 @@ const gameSetup = async()=> {
     return checkEffectiveness(typeData.damage_relations,typesToMatch)
 }
 
-const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{ //TODO check and rework logic
-    return targetTypes.every(type =>
-     guessedTypeRelations.double_damage_to.some(t=> t.name === type)
-    )
+const checkEffectiveness = (guessedTypeRelations,targetTypes) =>{
+    let multiplier = 1; // Initialize multiplier to 1
+    targetTypes.forEach(targetType => {
+        let ne =  guessedTypeRelations.no_damage_to.filter(guessedType => guessedType.name === targetType).length;
+        let he = guessedTypeRelations.half_damage_to.filter(guessedType => guessedType.name === targetType).length;
+        let se = guessedTypeRelations.double_damage_to.filter(guessedType => guessedType.name === targetType).length;
+        if(ne > 0){
+            multiplier *= 0; // No damage
+            console.log(`No damage to ${targetType}`)
+        }
+        else if(he > 0){
+            multiplier *= 0.5*he; // Half damage
+            console.log(`Half damage to ${targetType}`)
+        }
+        else if(se > 0){
+            multiplier *= 2*se; // Double damage
+            console.log(`Double damage to ${targetType}`)
+        }
+    })
+    console.log(`Multiplier: ${multiplier}`)
+    return multiplier>=2;
  }
  
 const resultHandling = (result) =>{
