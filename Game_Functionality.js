@@ -84,9 +84,12 @@ const form = document.querySelector('form')
 form.addEventListener('submit',async(event)=>{
    event.preventDefault()
    const searchBox = document.querySelector('#search-box')
-   const result = await guessHandling(searchBox.value.toLowerCase());
-   searchBox.value=""
-   resultHandling(result)
+   console.log(searchBox.value.length)
+   if(searchBox.value.length >0){
+    const result = await guessHandling(searchBox.value.toLowerCase());
+    searchBox.value=""
+    resultHandling(result)
+    }
 })
 
 //Restart button handling

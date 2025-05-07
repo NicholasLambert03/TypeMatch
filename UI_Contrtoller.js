@@ -81,7 +81,7 @@ const filterDropdown = () =>{
 
     for(let option of options){
         const text = option.value
-        if(text.includes(filter)){
+        if(text.includes(filter) ){
             option.style.display = 'block'
         }
         else{

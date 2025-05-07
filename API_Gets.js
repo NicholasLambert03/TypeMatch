@@ -13,7 +13,7 @@ const getPokemonTotal = async () => {
 
 const getPokemonDropdownData = async () => {
     try{
-        const response = await axios.get('https://pokeapi.co/api/v2/pokemon-species?limit=1300');
+        const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=10000');
         const pokemonNames = response.data.results.map(pokemon => pokemon.name);
         return pokemonNames;
     }
