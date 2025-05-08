@@ -33,20 +33,13 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
     const cards = pokemonCardContainer.querySelectorAll('#pokemon-card')
     const card = cards[cardNum] 
     try{
-        
         const cardSpriteHolder = card.querySelector('#pokemon-sprite')
         const cardTitle = card.querySelector('#pokemon-name')
         const cardTypes = card.querySelector('#pokemon-types')
         // Display Pokémon sprite
-        let isShiny = Math.random() < 0.03; // 3% chance of being shiny
-        if(isShiny){
-            cardSpriteHolder.src = pokemon.sprites.front_shiny;
-        }
-        else{
-            cardSpriteHolder.src = pokemon.sprites.front_default;
-        }
+        cardSpriteHolder.src = pokemon.sprites[`front_${(Math.random() < 0.03)? 'shiny' : 'default'}`];
         //Display Pokémon name
-        cardTitle.innerText = pokemon.name
+        cardTitle.innerText = pokemon.name.replaceAll('-',' ').replace(/\b\w/g, l => l.toUpperCase())
        ;
         cardTypes.innerHTML = ""; // Clear previous types
         
@@ -73,8 +66,9 @@ const populateDropdown = async () => {
     const names = await getPokemonDropdownData();
     names.forEach(name=>{
         const option = document.createElement('option');
+        option.classList.add()
         option.value = name;
-        option.textContent = name[0].toUpperCase() + name.slice(1);
+        option.textContent =  name.replaceAll('-',' ').replace(/\b\w/g, l => l.toUpperCase());
         dropdown.appendChild(option);
     })
 
@@ -110,18 +104,34 @@ const showResultText = (result) => {
     if(resultCard.classList.contains('invisible')){
         resultCard.classList.remove('invisible')
     }
-    if(result){
+    if(result==-1){
+        resultText.textContent = "Pokémon not in the pokédex!"
+        resultText.style.color="darkorange"
+    }
+    
+
+    else if(result>=2){
         const searchCard = document.querySelector('#search')
         searchCard.classList.add('invisible')
         const restart = document.querySelector('#restart')
         restart.classList.remove('invisible')
         resultText.style.color="green"
-        resultText.innerText = "You Win!"
+        resultText.innerText = `Super Effective! You Win!`
+    }
+    
+    else if(result==0){
+        resultText.style.color="red"
+        resultText.innerText = `No Effect! Try again!`
+    }
+    else if(result==1){
+        resultText.style.color="blue"
+        resultText.innerText = `Normal Effect! Try again!`
     }
     else{
-        resultText.style.color="red"
-        resultText.innerText = "Wrong Try Again!"
+        resultText.style.color="purple"
+        resultText.innerText = `Not Very Effective! Try again!`
     }
+
 }
 
 const resetScreen = () => {

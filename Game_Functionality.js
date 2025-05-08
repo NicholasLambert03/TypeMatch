@@ -46,11 +46,11 @@ const guessHandling = async(guess)=>{
            typeData = await getTypeData(url)
            effectiveness = Math.max(effectiveness,checkEffectiveness(typeData.damage_relations,typesToMatch))
        }   
-       return effectiveness >=2;
+       resultHandling(effectiveness)
    }
    catch(error){
        console.log(`Pokémon not found ${error}`)
-       return false
+       resultHandling(-1)
    }
 }
 
@@ -88,7 +88,7 @@ form.addEventListener('submit',async(event)=>{
    if(searchBox.value.length >0){
     const result = await guessHandling(searchBox.value.toLowerCase());
     searchBox.value=""
-    resultHandling(result)
+    
     }
 })
 

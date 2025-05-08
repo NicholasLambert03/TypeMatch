@@ -35,10 +35,6 @@ h1{
     font-family: "press Start 2P",system-ui;
 }
 
-#search-label{
-    color: rgb(196, 159, 59);
-}
-
 #pokemon-sprite{
     image-rendering: pixelated;
 }
@@ -51,7 +47,6 @@ h1{
 
 
 #result-text{
-    color: rgb(196, 159, 59);
     font-family: "press Start 2P",system-ui;
 }
 
