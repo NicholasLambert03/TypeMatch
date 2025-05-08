@@ -38,7 +38,13 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
         const cardTitle = card.querySelector('#pokemon-name')
         const cardTypes = card.querySelector('#pokemon-types')
         // Display Pokémon sprite
-        cardSpriteHolder.src = pokemon.sprites.front_default;
+        let isShiny = Math.random() < 0.03; // 3% chance of being shiny
+        if(isShiny){
+            cardSpriteHolder.src = pokemon.sprites.front_shiny;
+        }
+        else{
+            cardSpriteHolder.src = pokemon.sprites.front_default;
+        }
         //Display Pokémon name
         cardTitle.innerText = pokemon.name
        ;
