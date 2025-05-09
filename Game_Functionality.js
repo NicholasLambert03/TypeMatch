@@ -1,7 +1,21 @@
-const gameSetup = async()=> {
-    await setupNewCard()
-    populateDropdown()
+const gameSetup = async () => {
+    await setupNewCard();
+    await populateDropdown();
+    $(document).ready(function() {
+        const $select = $('#search-box').selectize({
+            sortField: 'text',
+            maxOptions: 5, // Set a higher initial maxOptions
+            closeAfterSelect: true,
+            onItemAdd: function(value, $item) {
+                guessHandling(value);
+                const selectizeInstance = $select[0].selectize;
+                selectizeInstance.clear();
+            }
+        });
+    });
 }
+
+
 
 const setupNewCard = async()=>{
    let pokemon;

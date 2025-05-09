@@ -74,7 +74,7 @@ const updatePokemonCard = async (pokemon,cardNum) =>{
 };
 
 const populateDropdown = async () => {
-    const dropdown = document.querySelector('#search-dropdown');
+    const dropdown = document.querySelector('#search-box');
     const names = await getPokemonDropdownData();
     names.forEach(name=>{
         const option = document.createElement('option');
@@ -84,22 +84,6 @@ const populateDropdown = async () => {
         dropdown.appendChild(option);
     })
 
-}
-
-const filterDropdown = () =>{
-    const dropdown = document.querySelector('#search-dropdown');
-    const filter = searchBox.value.toLowerCase()
-    const options = dropdown.querySelectorAll('option')
-
-    for(let option of options){
-        const text = option.value
-        if(text.includes(filter) ){
-            option.style.display = 'block'
-        }
-        else{
-            option.style.display = 'none'
-        }
-    }
 }
 
 const showVersusText = () => {
@@ -162,5 +146,3 @@ const resetScreen = () => {
     }
 }
 
-const searchBox = document.querySelector('#search-box')
-searchBox.addEventListener('input', filterDropdown);
