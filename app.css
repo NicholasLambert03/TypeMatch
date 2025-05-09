@@ -82,9 +82,3 @@ h1{
     color: rgb(196, 159, 59);
     text-decoration: underline;
 }
-
-
-#search-box:focus {
-    outline: none; /* Remove the default outline */
-    box-shadow: none; /* Remove any box shadow */
-}
