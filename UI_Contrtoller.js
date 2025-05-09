@@ -31,13 +31,25 @@ const createPokemonCard = (pokemon)=>{
 
 const updatePokemonCard = async (pokemon,cardNum) =>{
     const cards = pokemonCardContainer.querySelectorAll('#pokemon-card')
-    const card = cards[cardNum] 
+    const card = cards[cardNum]
+
+    if(card.classList.contains('shiny-card')){ //Remove shiny class if it exists //TODO maybe fix this to be more efficient
+        card.classList.remove('shiny-card')
+    }
+ 
     try{
         const cardSpriteHolder = card.querySelector('#pokemon-sprite')
         const cardTitle = card.querySelector('#pokemon-name')
         const cardTypes = card.querySelector('#pokemon-types')
         // Display Pokémon sprite
-        cardSpriteHolder.src = pokemon.sprites[`front_${(Math.random() < 0.03)? 'shiny' : 'default'}`];
+        isShiny = Math.random() < shiny_chance
+        if(isShiny){
+        cardSpriteHolder.src = pokemon.sprites.front_shiny
+        card.classList.add('shiny-card') 
+        }
+        else{
+        cardSpriteHolder.src= pokemon.sprites.front_default
+        }
         //Display Pokémon name
         cardTitle.innerText = pokemon.name.replaceAll('-',' ').replace(/\b\w/g, l => l.toUpperCase())
        ;

@@ -3,6 +3,8 @@ body{
 }
 .card{
     background-color:rgb(100,100,124);
+    color: rgb(47,50,63);
+    font-weight: bold;
     
 
 }
@@ -26,11 +28,17 @@ h1{
     transition: scale 0.2s;
 }
 
-#pokemon-name{
-    color: rgb(43,50,63);
-    font-weight: bold;
-    
+#pokemon-card-holder .shiny-card{
+   border-top: 10px solid goldenrod;
+   background-color: goldenrod;
 }
+
+.shiny-card .type-card{
+    border: solid 2px rgb(47,50,63);
+    border-radius: 5px;
+}
+
+
 #search,#htp-title,#thanks{
     font-family: "press Start 2P",system-ui;
 }

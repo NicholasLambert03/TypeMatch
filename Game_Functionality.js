@@ -75,6 +75,12 @@ const checkEffectiveness = (guessedTypeRelations,typeToBeat) =>{
 }
 
 const resultHandling = (result) =>{
+    if(result>=2){
+        shiny_chance += 0.03
+    }
+    else{
+        shiny_chance =0.03
+    }
    showResultText(result)
 }
 
@@ -101,3 +107,4 @@ restartButton.addEventListener('click',(event)=>{
 
 })
 
+let shiny_chance = 0.03
