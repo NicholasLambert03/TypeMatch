@@ -136,11 +136,11 @@ const showResultText = (result) => {
         resultText.innerText = `No Effect! Try again!`
     }
     else if(result==1){
-        resultText.style.color="blue"
+        resultText.style.color="darksalmon"
         resultText.innerText = `Normal Effect! Try again!`
     }
     else{
-        resultText.style.color="purple"
+        resultText.style.color="rgb(100,100,124)"
         resultText.innerText = `Not Very Effective! Try again!`
     }
 
